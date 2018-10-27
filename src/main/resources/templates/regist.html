@@ -36,12 +36,15 @@
             <tr>
                 <td>昵称</td>
                 <td><input name="nickname" type="text" id="nickname" easyform="length:2-16" message="昵称必须为2—16位" easytip="disappear:lost-focus;theme:blue;"></td>
-            </tr>            
+            </tr>
+            <tr >
+                <input id="msgInput" type="hidden"  message="" >
+            </tr>
         </table>
 
 		<div class="buttons">
-			<input value="注 册" type="submit" style="margin-right:20px; margin-top:20px;">
-			<input value="我有账号，我要登录" id="regist-button" type="button" style="margin-right:45px; margin-top:20px;">
+			<input value="注 册" id="regist-button" type="button" style="margin-right:20px; margin-top:20px;">
+			<input value="我有账号，我要登录" id="login-button" type="button" style="margin-right:45px; margin-top:20px;">
         </div>
 		
         <br class="clear">
@@ -55,8 +58,26 @@ $(document).ready(function(){
 </script>
 <script>
     $(function () {
-        $("#regist-button").click(function () {
+        $("#login-button").click(function () {
             window.location.href="login.html"
+        });
+        $("#regist-button").click(function () {
+            var username = $("#uid").val();
+            var password = $("#psw1").val();
+            var surePassword = $("#psw2").val();
+            var email = $("#email").val();
+            var nickname = $("#nickname").val();
+            $.ajax({
+                url:"v1/users/regist",
+                type:"post",
+                date:{"username":username,"password":password,"surePassword":surePassword,"email":email,"nickname":nickname},
+                success:function (res) {
+                    alert(res.msg)
+                },
+                error:function (err) {
+                    alert(err)
+                }
+            });
         });
     })
 </script>
